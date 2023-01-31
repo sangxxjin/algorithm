@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         Scanner sc =new Scanner(System.in);
@@ -13,18 +12,16 @@ public class Main {
             if ((b-a)%2==1){ //
                 for (int j = a; j <b; j++) {
                     int num1=arr[a];
-                    int num2=arr[b];
-                    arr[a]=num2;
+                    arr[a]=arr[b];
                     arr[b]=num1;
                     a++;b--;
                 }
             }
-            if ((b-a)%2==0){
+            else {
                 for (int j = a; j <b; j++) {
                     if(a==b) break;
                     int num1=arr[a];
-                    int num2=arr[b];
-                    arr[a]=num2;
+                    arr[a]=arr[b];
                     arr[b]=num1;
                     a++;b--;
                 }
