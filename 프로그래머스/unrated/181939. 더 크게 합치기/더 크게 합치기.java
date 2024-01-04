@@ -5,8 +5,6 @@ class Solution {
     String bb = String.valueOf(b);
     aa+=b;
     bb+=a;
-    if(Integer.parseInt(aa)>Integer.parseInt(bb))answer=Integer.parseInt(aa);
-    else answer = Integer.parseInt(bb);
-    return answer;
+    return Math.max(Integer.parseInt(aa),Integer.parseInt(bb));
   }
 }
