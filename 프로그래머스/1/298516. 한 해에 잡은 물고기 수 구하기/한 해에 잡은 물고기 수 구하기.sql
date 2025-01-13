@@ -1,1 +1,3 @@
-select count(id) as fish_count from fish_info where (length is null or length > 10) and time like "2021%"
+select count(fi.id) as fish_count 
+from fish_info as fi
+where time like "2021%"
