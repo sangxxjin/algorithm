@@ -1,40 +1,32 @@
 class Solution {
-    public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
-        int videoLength = toSeconds(video_len);
-        int currentPosition = toSeconds(pos);
-        int openingStart = toSeconds(op_start);
-        int openingEnd = toSeconds(op_end);
-        
-        if (currentPosition >= openingStart && currentPosition <= openingEnd) {
-            currentPosition = openingEnd;
-        }
-        
-        for (String command : commands) {
-            if (command.equals("prev")) {
-                currentPosition = Math.max(0, currentPosition - 10);
-            } 
-            if (command.equals("next")) {
-                currentPosition = Math.min(videoLength, currentPosition + 10);
-            }
-            
-            if (currentPosition >= openingStart && currentPosition <= openingEnd) {
-                currentPosition = openingEnd;
-            }
-        }
-        
-        return toTimeFormat(currentPosition);
-    }
-    
-    private int toSeconds(String time) {
-        String[] parts = time.split(":");
-        int minutes = Integer.parseInt(parts[0]);
-        int seconds = Integer.parseInt(parts[1]);
-        return minutes * 60 + seconds;
-    }
-    
-    private String toTimeFormat(int totalSeconds) {
-        int minutes = totalSeconds / 60;
-        int seconds = totalSeconds % 60;
-        return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-    }
-}
+        int v;
+		int o_start;
+		int o_end;
+		public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
+			v = Integer.parseInt(video_len.split(":")[0])*60 + Integer.parseInt(video_len.split(":")[1]);
+			int p = Integer.parseInt(pos.split(":")[0])*60 + Integer.parseInt(pos.split(":")[1]);
+			o_start = Integer.parseInt(op_start.split(":")[0])*60 + Integer.parseInt(op_start.split(":")[1]);
+			o_end = Integer.parseInt(op_end.split(":")[0])*60 + Integer.parseInt(op_end.split(":")[1]);
+            if(isBetweenOpening(p))p=o_end;
+			for(String command : commands){
+				if(command.equals("next"))p=next(p);
+				if(command.equals("prev"))p=prev(p);
+				if(isBetweenOpening(p))p=o_end;
+			}
+			return String.format("%02d:%02d", p / 60, p % 60);
+		}
+		private int next(int time){
+			time+=10;
+            if(time>v)time=v;
+            return time;
+		}
+		private int prev(int time){
+			time-=10;
+			if(time<0)time=0;
+			return time;
+		}
+		private boolean isBetweenOpening(int time){
+			if(o_start<=time && time<=o_end)return true;
+			return false;
+		}
+	}
