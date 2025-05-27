@@ -1,10 +1,9 @@
-SELECT fp.category, fp.price AS max_price, fp.product_name
-FROM food_product fp
-JOIN (
-    SELECT category, MAX(price) AS max_price
-    FROM food_product
-    WHERE category IN ('과자','국','김치','식용유')
-    GROUP BY category
-) AS max_fp
-ON fp.category = max_fp.category AND fp.price = max_fp.max_price
+SELECT category, price AS max_price, product_name
+FROM (
+  SELECT *,
+         ROW_NUMBER() OVER (PARTITION BY category ORDER BY price DESC) AS rn
+  FROM food_product
+  WHERE category IN ('과자','국','김치','식용유')
+) ranked
+WHERE rn = 1
 ORDER BY max_price DESC;
