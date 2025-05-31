@@ -12,7 +12,7 @@ class Solution {
     }
 
     private boolean isCorrect(String s) {
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> stack = new ArrayDeque<>();
         for (int i = 0; i < s.length(); i++) {
             char cur = s.charAt(i);
             if (isOpen(cur)) {
@@ -27,10 +27,10 @@ class Solution {
     }
 
     private boolean isOpen(char c){
-        return c=='('||c=='{'||c=='[';
+        return c == '(' || c == '{' || c == '[';
     }
 
     private boolean isSet(char a, char b){
-        return (a=='(' && b==')') || (a=='{' && b=='}') || (a=='[' && b==']');
+        return (a == '(' && b == ')') || (a == '{' && b == '}') || (a == '[' && b == ']');
     }
 }
