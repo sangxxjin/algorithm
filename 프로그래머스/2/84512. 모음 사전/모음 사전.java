@@ -1,29 +1,26 @@
-import java.util.*;
 class Solution {
-    static String[] arr;
-    static List<String> list;
+    static String[] vowels = {"A", "E", "I", "O", "U"};
+    static int index = 0;
+    static int answer = 0;
+    static boolean found = false;
+
     public int solution(String word) {
-        int answer = 0;
-        list = new ArrayList<>();
-        arr = new String[]{"A", "E", "I", "O", "U"};
-        recursion(word, "", 0);
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).equals(word)) {
-                answer = i;
-                break;
-            }
-        }
+        dfs("", word);
         return answer;
     }
-    private static void recursion(String word, String str, int depth) {
-        list.add(str);
-        
-        if(depth == 5) {
+
+    private void dfs(String current, String target) {
+        if (current.equals(target)) {
+            found = true;
+            answer = index;
             return;
         }
-        
-        for (int i = 0; i < arr.length; i++) {
-            recursion(word, str + arr[i], depth + 1);
+        if (current.length() == 5) return;
+
+        for (int i = 0; i < vowels.length; i++) {
+            if (found) return;
+            index++;
+            dfs(current + vowels[i], target);
         }
     }
 }
