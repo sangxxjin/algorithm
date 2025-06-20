@@ -11,13 +11,13 @@ class Solution {
         int[] dx = {0, 1, 0, -1};
         int[] dy = {-1, 0, 1, 0};
 
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[]{0, 0});
+        Deque<int[]> deq = new ArrayDeque<>();
+        deq.offerFirst(new int[]{0, 0});
         visited[0][0] = true;
         dist[0][0] = 1;
 
-        while (!q.isEmpty()) {
-            int[] now = q.poll();
+        while (!deq.isEmpty()) {
+            int[] now = deq.pollLast();
             int y = now[0], x = now[1];
 
             for (int dir = 0; dir < 4; dir++) {
@@ -30,7 +30,7 @@ class Solution {
 
                 visited[ny][nx] = true;
                 dist[ny][nx] = dist[y][x] + 1;
-                q.offer(new int[]{ny, nx});
+                deq.offerFirst(new int[]{ny, nx});
             }
         }
 
